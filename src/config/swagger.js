@@ -1,15 +1,15 @@
-exports.options = {
+export default {
   routePrefix: '/docs',
   exposeRoute: true,
   swagger: {
     info: {
       title: 'rest-node',
       description: 'REST API with Node.js, MongoDB, Fastify and Swagger',
-      version: '0.0.1'
+      version: '0.0.1',
     },
     externalDocs: {
       url: 'https://swagger.io',
-      description: 'Find more info here'
+      description: 'Find more info here',
     },
     host: 'localhost',
     schemes: ['http', 'https'],
@@ -19,8 +19,8 @@ exports.options = {
       apiKey: {
         type: 'apiKey',
         name: 'apiKey',
-        in: 'header'
-      }
-    }
-  }
-}
+        in: 'header',
+      },
+    },
+  },
+};

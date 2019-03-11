@@ -1,60 +1,58 @@
-// External Dependancies
-const boom = require('boom')
+import boom from 'boom';
 
-// Get Data Models
-const Car = require('../models/Car')
+import Car from '../models/Car';
 
 // Get all cars
-exports.getCars = async (req, reply) => {
+export const getCars = async () => {
   try {
-    const cars = await Car.find()
-    return cars
+    const cars = await Car.find();
+    return cars;
   } catch (err) {
-    throw boom.boomify(err)
+    throw boom.boomify(err);
   }
-}
+};
 
 // Get single car by ID
-exports.getSingleCar = async (req, reply) => {
+export const getSingleCar = async (req) => {
   try {
-    const id = req.params.id
-    const car = await Car.findById(id)
-    return car
+    const { params: { id } } = req;
+    const car = await Car.findById(id);
+    return car;
   } catch (err) {
-    throw boom.boomify(err)
+    throw boom.boomify(err);
   }
-}
+};
 
 // Add a new car
-exports.addCar = async (req, reply) => {
+export const addCar = async (req) => {
   try {
-    const car = new Car(req.body)
-    return car.save()
+    const car = new Car(req.body);
+    return car.save();
   } catch (err) {
-    throw boom.boomify(err)
+    throw boom.boomify(err);
   }
-}
+};
 
 // Update an existing car
-exports.updateCar = async (req, reply) => {
+export const updateCar = async (req) => {
   try {
-    const id = req.params.id
-    const car = req.body
-    const { ...updateData } = car
-    const update = await Car.findByIdAndUpdate(id, updateData, { new: true })
-    return update
+    const { params: { id } } = req;
+    const car = req.body;
+    const { ...updateData } = car;
+    const update = await Car.findByIdAndUpdate(id, updateData, { new: true });
+    return update;
   } catch (err) {
-    throw boom.boomify(err)
+    throw boom.boomify(err);
   }
-}
+};
 
 // Delete a car
-exports.deleteCar = async (req, reply) => {
+export const deleteCar = async (req) => {
   try {
-    const id = req.params.id
-    const car = await Car.findByIdAndRemove(id)
-    return car
+    const { params: { id } } = req;
+    const car = await Car.findByIdAndRemove(id);
+    return car;
   } catch (err) {
-    throw boom.boomify(err)
+    throw boom.boomify(err);
   }
-}
+};

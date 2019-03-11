@@ -1,41 +1,37 @@
-// Require external modules
-const mongoose = require('mongoose')
+import fastify from 'fastify';
+import fastifySwagger from 'fastify-swagger';
+import mongoose from 'mongoose';
 
-// Require the framework and instantiate it
-const fastify = require('fastify')({
-  logger: true
-})
+import swagger from './src/config/swagger';
+import routes from './src/routes';
 
-// Import Swagger Options
-const swagger = require('./src/config/swagger')
+const app = fastify({ logger: true });
+
 // Register Swagger
-fastify.register(require('fastify-swagger'), swagger.options)
-
-const routes = require('./src/routes')
+app.register(fastifySwagger, swagger.options);
 
 // Connect to DB
-mongoose.connect('mongodb://localhost/mycargarage')
- .then(() => console.log('MongoDB connected...'))
- .catch(err => console.log(err))
+mongoose.connect('mongodb://localhost/mycargarage', { useNewUrlParser: true })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err));
 
-routes.forEach((route, index) => {
-  fastify.route(route)
-})
+routes.forEach((route) => {
+  app.route(route);
+});
 
 // Declare a route
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
-})
+app.get('/', async () => ({ hello: 'world' }));
 
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(3000)
-    fastify.swagger()
-    fastify.log.info(`server listening on ${fastify.server.address().port}`)
+    await app.listen(3000);
+    app.swagger();
+    app.log.info(`server listening on ${app.server.address().port}`);
   } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
+    app.log.error(err);
+    process.exit(1);
   }
-}
-start()
+};
+
+start();

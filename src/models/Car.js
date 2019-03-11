@@ -1,5 +1,4 @@
-// External Dependancies
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 const carSchema = new mongoose.Schema({
   title: String,
@@ -8,8 +7,8 @@ const carSchema = new mongoose.Schema({
   age: Number,
   services: {
     type: Map,
-    of: String
-  }
-})
+    of: String,
+  },
+});
 
-module.exports = mongoose.model('Car', carSchema)
+export default mongoose.model('Car', carSchema);
