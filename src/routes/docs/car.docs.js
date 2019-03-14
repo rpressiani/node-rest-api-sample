@@ -1,6 +1,12 @@
+export const getSingleCarSchema = {
+  description: 'Get car by id',
+  tags: ['car-controller'],
+  summary: 'Get single car',
+};
+
 export const addCarSchema = {
   description: 'Create a new car',
-  tags: ['cars'],
+  tags: ['car-controller'],
   summary: 'Creates new car with given values',
   body: {
     type: 'object',
@@ -27,4 +33,9 @@ export const addCarSchema = {
       },
     },
   },
+  security: [
+    {
+      apiKey: [],
+    },
+  ],
 };

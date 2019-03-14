@@ -11,14 +11,14 @@ export default {
       url: 'https://swagger.io',
       description: 'Find more info here',
     },
-    host: 'localhost',
+    host: 'localhost:3000',
     schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
     securityDefinitions: {
       apiKey: {
         type: 'apiKey',
-        name: 'apiKey',
+        name: 'x-access-token',
         in: 'header',
       },
     },
