@@ -1,11 +1,10 @@
 import fastify from 'fastify';
-import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 import mongoose from 'mongoose';
 
-import { JWT_SECRET } from './config/secret';
 import swaggerOptions from './config/swagger';
 import routes from './routes';
+import { verifyToken, test } from './utils/security.utils';
 
 const app = fastify({ logger: true });
 
@@ -17,27 +16,6 @@ app.register(require('fastify-boom'));
 mongoose.connect('mongodb://localhost/mycargarage', { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err));
-
-const verifyToken = (req, res, done) => {
-  try {
-    const token = req.headers['x-access-token'];
-    if (!token) {
-      res.code(403);
-      throw new Error('No token provided');
-    }
-    jwt.verify(token, JWT_SECRET, (err, decoded) => {
-      if (err) {
-        res.status(500);
-        throw new Error('Failed to authenticate token');
-      }
-      // if everything good, save to request for use in other routes
-      req.userId = decoded.id;
-    });
-    done();
-  } catch (err) {
-    res.send(err);
-  }
-};
 
 _.forEach(routes, (route) => {
   if (route.public) {
