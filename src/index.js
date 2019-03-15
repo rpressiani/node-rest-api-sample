@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import swaggerOptions from './config/swagger';
 import routes from './routes';
-import { verifyToken, test } from './utils/security.utils';
+import { verifyToken } from './utils/security.utils';
 
 const app = fastify({ logger: true });
 
@@ -28,7 +28,7 @@ _.forEach(routes, (route) => {
 // Run the server!
 const start = async () => {
   try {
-    await app.listen(3000);
+    await app.listen(3000, '0.0.0.0');
     app.swagger();
     app.log.info(`server listening on ${app.server.address().port}`);
   } catch (err) {
