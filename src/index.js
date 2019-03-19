@@ -13,9 +13,11 @@ app.register(require('fastify-swagger'), swaggerOptions);
 app.register(require('fastify-boom'));
 
 // Connect to DB
-mongoose.connect('mongodb://localhost/mycargarage', { useNewUrlParser: true })
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.log(err));
+// mongoose.connect('mongodb://localhost/mycargarage', { useNewUrlParser: true })
+//   .then(() => console.log('MongoDB connected...'))
+//   .catch(err => console.log(err));
+
+app.get('/', async () => ({ hello: 'world' }));
 
 _.forEach(routes, (route) => {
   if (route.public) {
